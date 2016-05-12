@@ -9,7 +9,7 @@ require() {
 }
 
 cleanup() {
-    rm -rf python_boilerplate
+    rm -rf name-of-the-project
 }
 trap cleanup EXIT
 
@@ -19,7 +19,7 @@ require cookiecutter
 echo "Running test script..."
 cookiecutter . --no-input
 (
-    cd ./python_boilerplate
+    cd ./name-of-the-project
     pwd
 )
 
