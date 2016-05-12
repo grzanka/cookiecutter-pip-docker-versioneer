@@ -8,42 +8,37 @@ Installation
 Stable release
 --------------
 
-To install twotwo, run this command in your terminal:
+To install cookiecutter-pip-docker-versioneer, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install onehundredseven
+    $ TODO
 
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
-
-.. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
 
 From sources
 ------------
 
-The sources for twotwo can be downloaded from the `Github repo`_.
+The sources for cookiecutter-pip-docker-versioneer can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/grzanka/onehundredseven
+    $ git clone git://github.com/grzanka/cookiecutter-pip-docker-versioneer
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/grzanka/onehundredseven/tarball/master
+    $ curl  -OL https://github.com/grzanka/cookiecutter-pip-docker-versioneer/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
 .. code-block:: console
 
-    $ python setup.py install
+    $ ???
 
 
-.. _Github repo: https://github.com/grzanka/onehundredseven
-.. _tarball: https://github.com/grzanka/twotwo/onehundredseven/master
+.. _Github repo: https://github.com/grzanka/cookiecutter-pip-docker-versioneer
+.. _tarball: https://github.com/grzanka/twotwo/cookiecutter-pip-docker-versioneer/master
