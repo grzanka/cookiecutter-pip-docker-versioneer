@@ -16,4 +16,5 @@ script:
 
 notifications:
   email:
-    - grzanka@agh.edu.pl
+    on_success: never
+    on_failure: always
