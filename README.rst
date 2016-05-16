@@ -27,3 +27,18 @@ Usage
 Generate a new Cookiecutter template layout: `cookiecutter gh:grzanka/cookiecutter-cookiecutter-pip-docker-versioneer`    
 
 
+After this you can create the initial repository (make sure you `create <https://github.com/new>`_ an *empty* Github
+project)::
+
+  git init .
+  git add .
+  git commit -m "Initial skel."
+  git remote add origin git@github.com:X/Y.git
+  git push -u origin master
+
+Then:
+
+* `Enable the repository in your Travis CI account <https://travis-ci.org/profile>`_.
+* `Add the repo to your ReadTheDocs account <https://readthedocs.org/dashboard/import/>`_ + turn on the ReadTheDocs
+  service hook. Don't forget to enable virtualenv and specify ``docs/requirements.txt`` as the requirements file in
+  `Advanced Settings`.
