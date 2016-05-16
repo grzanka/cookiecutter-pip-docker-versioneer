@@ -30,10 +30,9 @@ before_install:
 
 install:
   - pip install --upgrade virtualenv tox
-  - tox --notest
 
 script:
-  - tox -- -n 8
+  - tox -e $TOXENV
 
 notifications:
   email:
