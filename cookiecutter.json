@@ -3,14 +3,18 @@
     "email": "Your address email (eq. you@example.com)",
     "github_username": "Your github username",
     "project_name": "Name of the project",
+    "project_short_description": "A short description of the project",
     "repo_name": "python-{{ cookiecutter.project_name|lower|replace(' ','-') }}",
     "package_name": "{{ cookiecutter.project_name|lower|replace(' ','_')|replace('-','_') }}",
+    "distribution_name": "{{ cookiecutter.package_name|replace('_','-') }}",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
-    "project_short_description": "A short description of the project",
-    "use_pypi_deployment_with_travis": "y",
+    "travis": ["yes", "no"],
+    "use_pypi_deployment_with_travis": ["yes","no"],
+    "command_line_interface_bin_name": "{{ cookiecutter.package_name }}",
     "pypi_username": "{{ cookiecutter.github_username }}",
     "docker": ["yes", "no"],
     "codeclimate" : ["no", "yes"],
+    "requiresio": ["no", "yes"],
     "_extensions": ["jinja2_time.TimeExtension"]
 }
 

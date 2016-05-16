@@ -22,6 +22,8 @@ cookiecutter . --no-input
     cd ./name-of-the-project
     pwd
     ls -al
+    python name_of_the_project/run_test_name_of_the_project.py
+    tox
 )
 
 echo Done

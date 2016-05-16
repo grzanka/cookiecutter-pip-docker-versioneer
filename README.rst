@@ -24,7 +24,7 @@ Install first `cookiecutter` command line: `pip install cookiecutter`
 
 Usage
 -----
-Generate a new Cookiecutter template layout: `cookiecutter gh:grzanka/cookiecutter-cookiecutter-pip-docker-versioneer`    
+Generate a new Cookiecutter template layout: `cookiecutter gh:grzanka/cookiecutter-pip-docker-versioneer`
 
 
 After this you can create the initial repository (make sure you `create <https://github.com/new>`_ an *empty* Github
