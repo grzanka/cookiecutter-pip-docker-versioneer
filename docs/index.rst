@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 2
 
    installation
+   readme
    usage
    contributing
    authors
