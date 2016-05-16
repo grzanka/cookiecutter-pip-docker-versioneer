@@ -41,4 +41,4 @@ Once you have a copy of the source, you can install it with:
 
 
 .. _Github repo: https://github.com/grzanka/cookiecutter-pip-docker-versioneer
-.. _tarball: https://github.com/grzanka/twotwo/cookiecutter-pip-docker-versioneer/master
+.. _zip: https://github.com/grzanka/cookiecutter-pip-docker-versioneer/archive/master.zip

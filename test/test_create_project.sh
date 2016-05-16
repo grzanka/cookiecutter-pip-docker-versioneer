@@ -22,11 +22,9 @@ cookiecutter . --no-input
     cd ./name-of-the-project
     pip install versioneer
     pip install -r requirements.txt
-    python setup.py test
-    pwd
-    ls -al
-    python name_of_the_project/run_test_name_of_the_project.py
-    tox
+    versioneer install
+    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
+#    tox
 )
 
 echo Done
