@@ -27,7 +27,7 @@ You can either clone the public repository:
 
     $ git clone git://github.com/grzanka/cookiecutter-pip-docker-versioneer
 
-Or download the `tarball`_:
+Or download the `zip`_:
 
 .. code-block:: console
 

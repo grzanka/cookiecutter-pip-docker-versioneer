@@ -1,5 +1,5 @@
 Welcome to cookiecutter-pip-docker-versioneer's documentation!
-======================================
+==============================================================
 
 Contents:
 
@@ -14,7 +14,7 @@ Contents:
 
 
 Short
-------------
+-----
 
 * Documentation: http://cookiecutter-pip-docker-versioneer.rtfd.org/
 * GitHub: https://github.com/grzanka/cookiecutter-pip-docker-versioneer
@@ -22,7 +22,7 @@ Short
 
 
 Technology stack
-------------
+----------------
 
 * Python
 * RST
@@ -40,13 +40,13 @@ Technology stack
 * GIT
 
 Long
-------------
+----
 
 
 * Cookie cutter main page: https://github.com/audreyr/cookiecutter
 
 Procedure
-------------
+---------
 
 * Create empty github repo
 * Clone it
@@ -57,10 +57,10 @@ Optionally:
 * Add the repo to travis
 * Add the repo to readthedocs
 * Setup PyPi packaging via travis
-   * Register package in testing pypi repo
-   * Register package in standard pypi repo
-   * Encrypt your pipi password and add it to .travis.yml
-   * Do a test commit to see if package is on travis
+* Register package in testing pypi repo
+* Register package in standard pypi repo
+* Encrypt your pipi password and add it to .travis.yml
+* Do a test commit to see if package is on travis
 * Docker testing
 
 Issuing new release:
