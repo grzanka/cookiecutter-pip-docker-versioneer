@@ -1,12 +1,9 @@
 language: python
 
-python: 3.5
-
 # travis-ci runs by default on ancient Ubuntu 12.04 (precise)
 # following options will give us Ubuntu 14.04 (trusty)
 sudo: required
 dist: trusty
-
 
 matrix:
     include:
