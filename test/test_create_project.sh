@@ -20,6 +20,9 @@ echo "Running test script..."
 cookiecutter . --no-input
 (
     cd ./name-of-the-project
+    git init .
+    git add -A .
+    git commit -m "initial."
     pip install versioneer
     pip install -r requirements.txt
     versioneer install

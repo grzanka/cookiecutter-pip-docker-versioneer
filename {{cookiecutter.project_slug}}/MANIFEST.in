@@ -1,3 +1,13 @@
-include AUTHORS.rst
-include README.rst
+  include .gitkeep
+  include *.rst
+  include *.txt
+  include *.py
+  include LICENSE
+  include tox.ini
+  recursive-include docs *.py
+  recursive-include docs *.rst
+  recursive-include {{ cookiecutter.package_name }} *.py
+  recursive-include tests *.py
 
+  include versioneer.py
+  include {{ cookiecutter.package_name }}/_version.py

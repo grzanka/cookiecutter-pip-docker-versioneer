@@ -2,6 +2,7 @@ import argparse
 
 import numpy as np
 
+
 def fun(big=False):
     if big:
         print("Hej ho")

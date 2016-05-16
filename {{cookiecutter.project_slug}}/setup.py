@@ -53,7 +53,8 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            '{{ cookiecutter.command_line_interface_bin_name }}={{ cookiecutter.package_name }}.{{ cookiecutter.command_line_interface_bin_name }}:main',
+            '{{ cookiecutter.command_line_interface_bin_name }}=' + \
+            '{{ cookiecutter.package_name }}.{{ cookiecutter.command_line_interface_bin_name }}:main',
         ],
     },
 {%- if cookiecutter.versioneer|lower == 'yes' %}
