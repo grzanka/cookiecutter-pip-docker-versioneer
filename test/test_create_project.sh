@@ -20,6 +20,7 @@ echo "Running test script..."
 cookiecutter . --no-input
 (
     cd ./name-of-the-project
+    pip install versioneer
     pip install -r requirements.txt
     python setup.py test
     pwd
