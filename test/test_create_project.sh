@@ -21,6 +21,7 @@ cookiecutter . --no-input
 (
     cd ./name-of-the-project
     pwd
+    ls -al
 )
 
 echo Done

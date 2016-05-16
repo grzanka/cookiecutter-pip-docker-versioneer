@@ -3,6 +3,7 @@ TODO!
 
 * check https://github.com/ionelmc/cookiecutter-pylibrary
 * check https://github.com/kragniz/cookiecutter-pypackage-minimal
+* check travis here https://github.com/pypa/pip/tree/166f3d20e27f06c1ca74d30ec6ceed688f295b47
 
 "Define testing dependencies in tox.ini Avoid duplicating dependency definitions, and use tox.ini as the canonical description of how the unittests should be run."
 
