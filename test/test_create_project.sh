@@ -4,6 +4,8 @@
 
 set -e
 
+TOXENV=$1
+
 require() {
     type $1 >/dev/null 2>/dev/null
 }
@@ -20,9 +22,9 @@ echo "Running test script..."
 cookiecutter . --no-input
 (
     cd ./name-of-the-project
-#    export HOME=`pwd`
-#    git config --global user.email "you@example.com"
-#    git config --global user.name "Your Name"
+    export HOME=`pwd`
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
     git init .
     git add -A .
     git commit -m "initial."
@@ -32,7 +34,7 @@ cookiecutter . --no-input
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --help
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --version
-    tox -- -n 8
+    tox -e $TOXENV -- -n 8
 )
 
 echo Done

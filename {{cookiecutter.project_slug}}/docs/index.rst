@@ -1,5 +1,5 @@
 Welcome to {{ cookiecutter.distribution_name }}'s documentation!
-===========================================
+================================================================
 
 Contents:
 

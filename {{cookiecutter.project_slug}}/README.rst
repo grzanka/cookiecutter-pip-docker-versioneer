@@ -24,8 +24,8 @@ Overview
     * - docs
       - |docs|
     * - tests
-      - | {%- if cookiecutter.travis|lower == 'yes' %} |travis|{% endif -%}
-        | {%- if cookiecutter.codeclimate|lower == 'yes' %} |codeclimate|{% endif -%}
+      - {%- if cookiecutter.travis|lower == 'yes' %} |travis|{% endif -%}
+        {%- if cookiecutter.codeclimate|lower == 'yes' %} |codeclimate|{% endif -%}
 {{ '' }}
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|

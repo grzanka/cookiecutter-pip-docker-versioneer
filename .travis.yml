@@ -8,17 +8,17 @@ dist: trusty
 matrix:
     include:
         - python: 2.7
-          env: TOXENV=py27
+          env: TOXENV=py27-proj27
         - python: 3.3
-          env: TOXENV=py33
+          env: TOXENV=py33-proj33
         - python: 3.4
-          env: TOXENV=py34
+          env: TOXENV=py34-proj34
         - python: 3.5
-          env: TOXENV=py35
+          env: TOXENV=py35-proj35
         - python: 3.5-dev
-          env: TOXENV=py35
+          env: TOXENV=py35-proj35
         - python: nightly
-          env: TOXENV=py36
+          env: TOXENV=py36-proj36
         - env: TOXENV=docs
 
 before_install:
