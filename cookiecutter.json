@@ -12,6 +12,7 @@
     "use_pypi_deployment_with_travis": ["yes","no"],
     "command_line_interface_bin_name": "{{ cookiecutter.package_name }}",
     "pypi_username": "{{ cookiecutter.github_username }}",
+    "versioneer": ["yes", "no"],
     "docker": ["yes", "no"],
     "codeclimate" : ["no", "yes"],
     "requiresio": ["no", "yes"],
