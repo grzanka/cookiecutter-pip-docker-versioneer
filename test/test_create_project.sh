@@ -24,7 +24,7 @@ cookiecutter . --no-input
     pip install -r requirements.txt
     versioneer install
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
-    tox
+    tox -- -n 8
 )
 
 echo Done
