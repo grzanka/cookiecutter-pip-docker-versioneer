@@ -6,7 +6,7 @@ from {{ cookiecutter.package_name }} import {{cookiecutter.command_line_interfac
 class TestFunMethod(unittest.TestCase):
     def test_check(self):
         r = {{cookiecutter.command_line_interface_bin_name}}.check()
-        self.assertIn(r, ['True','False'])
+        self.assertIn(r, [True,False])
 
 
     def test_psaux(self):
