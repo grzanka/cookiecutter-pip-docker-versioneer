@@ -1,9 +1,14 @@
 import argparse
-
-import numpy as np
 import subprocess
 
+import numpy as np
+
 def psaux_output(verbose=False):
+    """
+    Calls "pa aux" system command and gives back its output in form of numpy array
+    :param verbose:
+    :return:
+    """
     out_bytes = subprocess.check_output(["ps", "aux"])
     out_text = out_bytes.decode('ascii')
     tmp_list = []
@@ -21,6 +26,11 @@ def psaux_output(verbose=False):
     return tmp_array
 
 def most_cpu_pid(verbose=False):
+    """
+    Gets pid of most-cpu-intensive process by calling psaux_output method and analysing its results
+    :param verbose:
+    :return:
+    """
     outp = psaux_output(verbose)
     x = np.sort(outp, kind="mergesort", order="cpu")
     most_cpu_item = x[-1]
@@ -32,6 +42,11 @@ def most_cpu_pid(verbose=False):
 
 
 def check(verbose=False):
+    """
+    Checks if PID of most-cpu-intensive process is prime number
+    :param verbose:
+    :return:
+    """
     pid = most_cpu_pid()
     d = 2
     prime = True
@@ -45,6 +60,10 @@ def check(verbose=False):
 
 
 def main():
+    """
+    Main function, called from CLI script
+    :return:
+    """
     import {{ cookiecutter.package_name }}
     parser = argparse.ArgumentParser()
     parser.add_argument('--verbose',

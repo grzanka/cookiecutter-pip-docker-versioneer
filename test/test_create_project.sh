@@ -31,9 +31,10 @@ cookiecutter . --no-input
     pip install versioneer
     pip install -r requirements.txt
     versioneer install
-    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --help
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --version
+    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
+    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --verbose
     tox -e $TOXENV -- -n 8
 )
 
