@@ -1,0 +1,77 @@
+language: python
+
+env:
+  global:
+# PYPI secured Password
+    - secure: "TO_BE_REPLACED"
+
+matrix:
+    include:
+        - python: 2.7
+          env: TOXENV=py27
+        - python: 3.3
+          env: TOXENV=py32 VENVVER="<14.0.0" PIPVER="<8.0.0"
+        - python: 3.3
+          env: TOXENV=py33
+        - python: 3.4
+          env: TOXENV=py34
+        - python: 3.5
+          env: TOXENV=py35 DOCKER=1
+        - python: 3.5-dev
+          env: TOXENV=py35
+        - python: nightly
+          env: TOXENV=py36
+        - env: TOXENV=docs
+        - env: TOXENV=cov
+        - env: TOXENV=pep8
+        - env: TOXENV=py3pep8
+        - env: TOXENV=packaging
+
+# travis-ci runs by default on ancient Ubuntu 12.04 (precise)
+# following options will give us Ubuntu 14.04 (trusty)
+sudo: required
+dist: trusty
+
+# docker will be used to simulate:
+#  - installation of python and necessary libraries on virgin system (as root)
+#  - installation of python application via pip (as user)
+#  - testing of a package by user: cmd line and tests
+services:
+  - docker
+
+install:
+  - pip install --upgrade virtualenv$VENVVER pip$PIPVER setuptools tox
+  - pip install --upgrade versioneer
+  - versioneer install
+
+before_script:
+# last commit message
+  - COM_MSG=`git log -1 --pretty=%B`
+  - echo $COM_MSG
+
+
+script:
+  - pip -V
+  - tox --notest
+  - tox -- -n 8
+
+  # deploy to pypi-test and run docker tests only with special commit message and only from py3.5 worker
+  - if [[ $COM_MSG == DOCKER* ]] && [[ $DOCKER == 1 ]]; then bash .travis/run_docker_tests.sh {{ cookiecutter.distribution_name }}; fi
+
+
+deploy:
+  - provider: pypi
+    distributions: bdist_wheel  # platform indepnentent wheel
+    server: https://testpypi.python.org/pypi # right now only testing server, once ready, replace with XXX
+    user: {{ cookiecutter.distribution_name }}
+    skip_cleanup: true  # we have some generated files to include in the package, such as _version.py
+    password:
+      secure: "TO_BE_REPLACED"
+    on:
+      branch: master
+      tags: true  # deploy only if version tags were created on github
+      condition: $TOXENV == "py35"
+
+notifications:
+  email:
+    - {{ cookiecutter.email }}
