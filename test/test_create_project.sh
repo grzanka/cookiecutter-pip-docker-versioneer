@@ -28,28 +28,32 @@ trap cleanup EXIT
 
 require cookiecutter
 
+PROJNAME=cookie01
+cd test
+rm -rf $PROJNAME
+
 echo "Running test script..."
-cookiecutter . --no-input
+cookiecutter --config-file github_deploy_config.json --no-input ..
 (
-    cd ./name-of-the-project
+    cd ./$PROJNAME
     export HOME=`pwd`
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
+    git config --global user.email "grzanka@agh.edu.pl"
+    git config --global user.name "Leszek Grzanka"
     git init .
     git add -A .
     git commit -m "initial."
     pip install versioneer
     pip install -r requirements.txt
     versioneer install
-    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --help
-    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --version
-    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
-    PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --verbose
+    PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py --help
+    PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py --version
+    PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py
+    PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py --verbose
     tox -e $TOXENV -- -n 8
     if [[ $DEPLOY -eq 1 ]]
     then
         GITHUBUSER=grzankatest
-        GITHUBREPO=cookie01
+        GITHUBREPO=$PROJNAME
 
         # remove repo, if exists
         echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
