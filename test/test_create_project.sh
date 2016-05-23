@@ -16,32 +16,46 @@ if [ -z "$2" ]
     DEPLOY=0
 fi
 
+
+PROJNAME="cookie01"
+EMAIL="grzanka@agh.edu.pl"
+NAME="Leszek Grzanka"
+GITHUBUSER="grzankatest"
+
 require() {
     type $1 >/dev/null 2>/dev/null
 }
 
 cleanup() {
-    rm -rf name-of-the-project
+    rm -rf $PROJNAME
+    rm github_deploy_config.json
 }
 trap cleanup EXIT
 
 
 require cookiecutter
 
-PROJNAME=cookie01
 cd test
-rm -rf $PROJNAME
+
+cat <<EOT >> github_deploy_config.json
+default_context:
+    full_name: $NAME
+    email: $EMAIL
+    github_username: $GITHUBUSER
+    project_name: $PROJNAME
+EOT
+
 
 echo "Running test script..."
 cookiecutter --config-file github_deploy_config.json --no-input ..
 (
     cd ./$PROJNAME
     export HOME=`pwd`
-    git config --global user.email "grzanka@agh.edu.pl"
-    git config --global user.name "Leszek Grzanka"
+    git config --global user.email $EMAIL
+    git config --global user.name $NAME
     git init .
     git add -A .
-    git commit -m "initial."
+    git commit -m "initial commit"
     pip install versioneer
     pip install -r requirements.txt
     versioneer install
@@ -52,8 +66,7 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
     tox -e $TOXENV -- -n 8
     if [[ $DEPLOY -eq 1 ]]
     then
-        GITHUBUSER=grzankatest
-        GITHUBREPO=$PROJNAME
+        GITHUBREPO=python-$PROJNAME
 
         # remove repo, if exists
         echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
@@ -67,7 +80,10 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         git config --global credential.helper store
         echo "https://$GITHUBUSER:$GITHUBTOKEN@github.com" > ~/.git-credentials
 
-        date >> README.rst
+        echo "$(echo "Travis generated this project on:" `date` | cat - README.rst)" > README.rst
+        git add README.rst
+        git commit -m "README updated"
+
 
         git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
         git push -v -u origin master
