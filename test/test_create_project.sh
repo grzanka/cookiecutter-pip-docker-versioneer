@@ -80,7 +80,7 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         git config --global credential.helper store
         echo "https://$GITHUBUSER:$GITHUBTOKEN@github.com" > ~/.git-credentials
 
-        echo "$(echo "Travis generated this project on:" `date` | cat - README.rst)" > README.rst
+        echo "$(echo "Travis generated this project on:" `date` "\n" | cat - README.rst)" > README.rst
         git add README.rst
         git commit -m "README updated"
 
