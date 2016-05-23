@@ -17,7 +17,7 @@ if [ -z "$2" ]
 fi
 
 
-PROJNAME="cookie01"
+PROJNAME="cookie02"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
 GITHUBUSER="grzankatest"
@@ -69,16 +69,13 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
     then
         GITHUBREPO=python-$PROJNAME
 
-
-        # disabled temporarily removing and creating repo
-
         # remove repo, if exists
-        #echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
-        #curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
+        echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
+        curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
 
         # create repo
-        #echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
-        #curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
+        echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
+        curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
 
         # save credentials in a store, this way "git push" won't ask for a password
         git config --global credential.helper store
@@ -86,8 +83,10 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
 
         git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
 
-        # clean remote repo and set its content to the local one
-        git push origin --mirror
+        ## clean remote repo and set its content to the local one
+        # git push origin --mirror
+
+        git push -u origin master
 
         # add timestamp to generated travis file
         TMPFILE=mktemp
