@@ -2,7 +2,12 @@
 
 # based on https://github.com/audreyr/cookiecutter-pypackage/
 
-set -e
+set -e # Exit immediately if a simple command exits with a non-zero status.
+
+set -o pipefail # Return value of a pipeline as the value of the last command to
+                # exit with a non-zero status, or zero if all commands in the
+                # pipeline exit successfully.
+
 
 TOXENV=$1
 
@@ -42,9 +47,27 @@ cookiecutter . --no-input
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --verbose
     tox -e $TOXENV -- -n 8
-    if [ "DEPLOY" ]
+    if [ "$DEPLOY" ]
     then
-        echo "TODO REPO DEPLOY"
+        GITHUBUSER=grzankatest
+        GITHUBREPO=cookie01
+
+        # remove repo, if exists
+        curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
+
+        # create repo
+        curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d '{"name":"$GITHUBREPO"}'
+
+        # save credentials in a store, this way "git push" won't ask for a password
+        git config --global credential.helper store
+        echo "https://$GITHUBUSER:$GITHUBTOKEN@github.com" > ~/.git-credentials
+
+        date >> README.rst
+
+        git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
+        git push -v -u origin master
+
+
     fi
 )
 
