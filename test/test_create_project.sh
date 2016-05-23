@@ -8,7 +8,6 @@ set -o pipefail # Return value of a pipeline as the value of the last command to
                 # exit with a non-zero status, or zero if all commands in the
                 # pipeline exit successfully.
 
-
 TOXENV=$1
 
 DEPLOY=1
@@ -53,9 +52,11 @@ cookiecutter . --no-input
         GITHUBREPO=cookie01
 
         # remove repo, if exists
+        echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
         curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
 
         # create repo
+        echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
         curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
 
         # save credentials in a store, this way "git push" won't ask for a password
