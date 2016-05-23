@@ -26,6 +26,7 @@ Overview
     * - tests
       - {%- if cookiecutter.travis|lower == 'yes' %} |travis|{% endif -%}
         {%- if cookiecutter.codeclimate|lower == 'yes' %} |codeclimate|{% endif -%}
+        {%- if cookiecutter.requiresio|lower == 'yes' %} |requires|{% endif -%}
 {{ '' }}
     * - package
       - |version| |downloads| |wheel| |supported-versions| |supported-implementations|
