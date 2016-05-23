@@ -70,7 +70,7 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         GITHUBREPO=python-$PROJNAME
 
 
-        # disabled temporarily
+        # disabled temporarily removing and creating repo
 
         # remove repo, if exists
         #echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
@@ -84,6 +84,11 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         git config --global credential.helper store
         echo "https://$GITHUBUSER:$GITHUBTOKEN@github.com" > ~/.git-credentials
 
+        git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
+
+        # clean remote repo and set its content to the local one
+        git push origin --mirror
+
         # add timestamp to generated travis file
         TMPFILE=mktemp
         cp README.rst $TMPFILE
@@ -94,10 +99,7 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         git add README.rst
         git commit -m "README updated"
 
-
-        git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
-        git push origin --mirror
-
+        git push -u origin master
 
     fi
 )
