@@ -47,7 +47,7 @@ cookiecutter . --no-input
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py
     PYTHONPATH=. python name_of_the_project/run_name_of_the_project.py --verbose
     tox -e $TOXENV -- -n 8
-    if [ "$DEPLOY" ]
+    if [[ $DEPLOY -eq 1 ]]
     then
         GITHUBUSER=grzankatest
         GITHUBREPO=cookie01
@@ -56,7 +56,7 @@ cookiecutter . --no-input
         curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
 
         # create repo
-        curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d '{"name":"$GITHUBREPO"}'
+        curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
 
         # save credentials in a store, this way "git push" won't ask for a password
         git config --global credential.helper store
