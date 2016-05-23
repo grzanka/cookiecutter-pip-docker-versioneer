@@ -12,26 +12,39 @@ What's this
 ===========
 
 A template to generate skeleton of python project, including:
+
 * example main script with argument parsing
 * few unittests in separate directory
 * skeleton of documentation in rST format (ready to be shipped to readthedocs service)
 * packaging configuration (project is ready to be shipped to PyPI repository)
 * travis configuration which runs test after each commit
 * tox configuration to ensure compatibility between various python versions and
+
     * flake to ensure that code follows Python standards (described in PEP??)
     * sphinx to ensure that documentation is properly formatted
     * test coverage reports (ready to be shipped to codeclimate)
+
 * tests in docker, to ensure that project will work smoothly in userspace under various Linux distributions
+
+An example
+==========
+
+Checkout a repository generated with this template:
+
+* https://github.com/grzankatest/python-cookie01
+
 
 
 Which problem this tool will solve
 ==================================
 
 Let us assume that we want to start a Python project with following goals:
+
 * user wants to check if PID  of process which is using maximum of CPU is a prime number
 * it runs on Linux
 * user doesn't have a root access
 * user wants easily install this tool (preferably "pip install --user")
+
 So far, so good. Seems easy to code. We can use python subprocess module to call "ps" and extract necessary information.
 
 So what could be the problem ? Lets start with python version. Which one to choose ?
@@ -54,6 +67,7 @@ one linux distribution to another. Using simply tox won't solve this problem as 
 its virtualenvs.
 
 The solution is to use docker containers. We can specify list of Linux distributions and for each of them:
+
 * get the image of container with bare system
 * as root install default python version using a system package manager
 * create a dummy user
@@ -63,6 +77,7 @@ In this way we'll be sure that from user perspective our project behave well.
 
 Users would also like to have nice webpage with step-by-step documentation and an easy way to upgrade the tool to higher
 version. To make it possible we provide support for following technologies:
+
 * versioneer to easily create new versions using github "Release" feature
 * sphinx to generate and publish documentation on "ReadTheDocs" service
 * git commit message parsing to run docker tests conditionally

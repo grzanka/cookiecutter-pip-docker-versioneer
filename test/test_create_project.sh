@@ -68,19 +68,28 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
     then
         GITHUBREPO=python-$PROJNAME
 
+
+        # disabled temporarily
+
         # remove repo, if exists
-        echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
-        curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
+        #echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
+        #curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
 
         # create repo
-        echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
-        curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
+        #echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
+        #curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
 
         # save credentials in a store, this way "git push" won't ask for a password
         git config --global credential.helper store
         echo "https://$GITHUBUSER:$GITHUBTOKEN@github.com" > ~/.git-credentials
 
-        echo "$(echo "Travis generated this project on:" `date` "\n" | cat - README.rst)" > README.rst
+        # add timestamp to generated travis file
+        TMPFILE=mktemp
+        cp README.rst $TMPFILE
+        echo "Travis generated this project on:" `date` > README.rst
+        echo "" >> README.rst
+        cat $TMPFILE >> README.rst
+
         git add README.rst
         git commit -m "README updated"
 
