@@ -35,6 +35,8 @@ matrix:
             - TOXENV=testdeploy
            # GitHub secured token, you need to update it to your own if you want to use it
             - secure: "TvwFrRVjQzxnvMjV5Spo/WAfWOIjOR4j91dBqRaykyG2WLkAS95iOwkNaa0OAcqDQf6uFJ2so54qpz8yPCZ+540hu3AspN2aeSS9IBmhia8CZ592BHm+plT2FPQZMC4PzXtG3eW1VnL+3Skvzwe4v6Qzffai8YdEWDnMYOrq8QkDeJnP2YqhatyrBih3FIhXWsNxk//5FHm7OEtQAAFhm4cjf2+vlhCE79kO3ynK/SXJuNXUk6+aKlnvus4Ya6kvMLihq+pE6+1pP/zn/YBU6u2qtR8/xg8oLP3FwrzAgczInlAeC8aRZVhknTtdmJQJcPyteSwAtrdeLST/uvHyYdBC1EVEntx08mDpUJqsEn7usGPsx+4GCJQ6VoBppvE9MutAitfDQV0xEQrb3ESM2mFJ1rX6vNVd6GSp5cX7Ko8rMneD4o8/PNUwRnmL0hu14GiVvd1up3pFT2a1Q0y19TIMRPbHx6Qdhl3Qa13Owa2p4tzGJzmntOD1dtdYahSXoV5Gc+uWLgCz9LnCLgvW2l8cyegz8kM7bLjrUdB3sj2b5QQZSeKWIrm5X7yk6ny2I8IwhIT0YSi7DJVOwENyaxAudrijzQZ3rxJJy2CfUPX8w7vrvZwLSisvQhqKHR3maVWx/q8CJ08uvI0ydGgjMo8TS4dZc9aHtAcwgFVGfTQ="
+        - python: 3.4
+          env: TOXENV=docs
 
 # check versions of tools, might be useful for debugging
 before_install:
