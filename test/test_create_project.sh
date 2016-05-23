@@ -17,7 +17,7 @@ if [ -z "$2" ]
 fi
 
 
-PROJNAME="cookie02"
+PROJNAME="cookie03"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
 GITHUBUSER="grzankatest"
@@ -73,9 +73,13 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
         echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
         curl -X DELETE -H "Authorization: token $GITHUBTOKEN" https://api.github.com/repos/$GITHUBUSER/$GITHUBREPO
 
+        sleep 10
+
         # create repo
         echo "Creating repo $GITHUBREPO (username $GITHUBUSER)"
         curl -u "$GITHUBUSER:$GITHUBTOKEN" https://api.github.com/user/repos -d "{\"name\":\"$GITHUBREPO\"}"
+
+        sleep 10
 
         # save credentials in a store, this way "git push" won't ask for a password
         git config --global credential.helper store
