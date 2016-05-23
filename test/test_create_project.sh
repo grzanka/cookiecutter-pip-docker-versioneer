@@ -43,6 +43,7 @@ default_context:
     email: $EMAIL
     github_username: $GITHUBUSER
     project_name: $PROJNAME
+    requiresio: "yes"
 EOT
 
 
