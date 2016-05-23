@@ -95,7 +95,7 @@ cookiecutter --config-file github_deploy_config.json --no-input ..
 
 
         git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
-        git push -v -u origin master
+        git push -u origin master --mirror
 
 
     fi

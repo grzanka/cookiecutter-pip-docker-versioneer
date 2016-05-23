@@ -108,6 +108,7 @@ Now we can run the example::
    [1 2 3 4]
 
 Next steps are following:
+
 * `Enable the repository in your Travis CI account <https://travis-ci.org/profile>`_.
 * `Add the repo to your ReadTheDocs account <https://readthedocs.org/dashboard/import/>`_ + turn on the ReadTheDocs
   service hook. Don't forget to enable virtualenv and specify ``docs/requirements.txt`` as the requirements file in
