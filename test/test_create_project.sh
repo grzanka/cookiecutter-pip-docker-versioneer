@@ -116,6 +116,10 @@ EOF
         git add README.rst
         git commit -m "README updated"
         git push -u origin master
+
+        # trigger building documentation on readthedocs
+        # you need however first manually enable project in readthedocs service
+        curl -X POST http://readthedocs.org/build/$GITHUBREPO
 }
 
 require cookiecutter
@@ -155,7 +159,16 @@ cookiecutter --config-file $TMPDIR/github_deploy_config.json --no-input $CURDIR
     # if github deploy enabled, put this repository to github and run travis tests
     if [[ $DEPLOY -eq 1 ]]
     then
-        deploy_to_github `pwd`
+        if [ $TRAVIS_BRANCH = "master" -a $TRAVIS_PULL_REQUEST = "false" ]
+        then
+            deploy_to_github `pwd`
+        else
+            echo "Not running deploy_to_github, this task was triggered from branch other than master or from PR"
+            echo "TRAVIS_BRANCH="$TRAVIS_BRANCH
+            echo "TRAVIS_PULL_REQUEST="$TRAVIS_PULL_REQUEST
+        fi
+    else
+        echo "Not running deploy_to_github, as you called this script with DEPLOY="$DEPLOY
     fi
 )
 
