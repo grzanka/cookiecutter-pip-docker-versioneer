@@ -3,9 +3,11 @@ import subprocess
 
 import numpy as np
 
+
 def psaux_output(verbose=False):
     """
-    Calls "pa aux" system command and gives back its output in form of numpy array
+    Call "ps aux" system command and
+    give back its output in form of numpy array
     :param verbose:
     :return:
     """
@@ -25,25 +27,30 @@ def psaux_output(verbose=False):
     tmp_array = np.array(tmp_list, dtype=dtype)
     return tmp_array
 
+
 def most_cpu_pid(verbose=False):
     """
-    Gets pid of most-cpu-intensive process by calling psaux_output method and analysing its results
+    Get pid of most-cpu-intensive process by calling psaux_output
+    method and analyse its results
     :param verbose:
     :return:
     """
     outp = psaux_output(verbose)
     x = np.sort(outp, kind="mergesort", order="cpu")
     most_cpu_item = x[-1]
+    pid = most_cpu_item["pid"]
     if verbose:
         print("=" * 100)
-        print("Most CPU consuming item", most_cpu_item["pid"], most_cpu_item["cpu"], most_cpu_item["name"])
-    pid = most_cpu_item["pid"]
+        print("Most CPU consuming item",
+              pid,
+              most_cpu_item["cpu"],
+              most_cpu_item["name"])
     return pid
 
 
 def check(verbose=False):
     """
-    Checks if PID of most-cpu-intensive process is prime number
+    Check if PID of most-cpu-intensive process is prime number
     :param verbose:
     :return:
     """

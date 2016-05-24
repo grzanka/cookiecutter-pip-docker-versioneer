@@ -22,7 +22,6 @@ matrix:
         - python: nightly
           env: TOXENV=py36
         - env: TOXENV=docs
-        - env: TOXENV=cov
         - env: TOXENV=pep8
         - env: TOXENV=py3pep8
         - env: TOXENV=packaging
