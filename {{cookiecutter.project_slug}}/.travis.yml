@@ -1,10 +1,5 @@
 language: python
 
-env:
-  global:
-# PYPI secured Password
-    - secure: "TO_BE_REPLACED"
-
 matrix:
     include:
         - python: 2.7
@@ -21,10 +16,20 @@ matrix:
           env: TOXENV=py35
         - python: nightly
           env: TOXENV=py36
-        - env: TOXENV=docs
-        - env: TOXENV=pep8
-        - env: TOXENV=py3pep8
-        - env: TOXENV=packaging
+        - python: 3.4
+          env: TOXENV=docs
+        - python: 2.7
+          env: TOXENV=pep8
+        - python: 3.4
+          env: TOXENV=py3pep8
+        - python: 3.4
+          env: TOXENV=packaging
+    allow_failures:
+        - python: 3.4
+          env:
+            - TOXENV=cov
+            #  Code Climate secured token, you need to update it to your own if you want to use it
+            - secure: "TO_BE_REPLACED"
 
 # travis-ci runs by default on ancient Ubuntu 12.04 (precise)
 # following options will give us Ubuntu 14.04 (trusty)

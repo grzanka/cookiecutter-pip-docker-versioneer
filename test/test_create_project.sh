@@ -154,6 +154,9 @@ cookiecutter --config-file $TMPDIR/github_deploy_config.json --no-input $CURDIR
     PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py --version
     PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py
     PYTHONPATH=. python $PROJNAME/run_$PROJNAME.py --verbose
+
+    # TODO move following line to requirements-test.txt or requirements-dev.txt
+    pip install tox virtualenv
     tox -e $TOXENV -- -n 8
 
     # if github deploy enabled, put this repository to github and run travis tests
