@@ -4,6 +4,9 @@ README
 .. image:: https://travis-ci.org/grzanka/cookiecutter-pip-docker-versioneer.svg?branch=master
     :target: https://travis-ci.org/grzanka/cookiecutter-pip-docker-versioneer
 
+.. image:: https://ci.appveyor.com/api/projects/status/7hfbmv67u86cygxb?svg=true
+    :target: https://ci.appveyor.com/project/grzanka/cookiecutter-pip-docker-versioneer
+
 .. image:: https://readthedocs.org/projects/cookiecutter-pip-docker-versioneer/badge/?version=latest
     :target: http://cookiecutter-pip-docker-versioneer.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status

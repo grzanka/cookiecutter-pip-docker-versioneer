@@ -1,4 +1,5 @@
 import unittest
+import os
 
 from {{ cookiecutter.package_name }} import {{cookiecutter.command_line_interface_bin_name}}
 
@@ -8,8 +9,11 @@ class TestFunMethod(unittest.TestCase):
         r = {{cookiecutter.command_line_interface_bin_name}}.check()
         self.assertIn(r, [True, False])
 
-    def test_psaux(self):
-        r = {{cookiecutter.command_line_interface_bin_name}}.psaux_output()
+    def test_process_output(self):
+        if os.name in ['posix']:
+            r = {{cookiecutter.command_line_interface_bin_name}}.process_output_linux()
+        else:
+            r = {{cookiecutter.command_line_interface_bin_name}}.process_output_windows()
         self.assertGreater(len(r), 1)
 
     def test_pid(self):
