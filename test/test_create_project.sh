@@ -18,7 +18,7 @@ if [ -z "$2" ]
     DEPLOY=0
 fi
 
-TMPDIR=`mktemp -d`
+CTMPDIR=`mktemp -d -t XXXXXXXX`
 PROJNAME="cookie05"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
@@ -30,7 +30,7 @@ require() {
 
 cleanup() {
     rm -rf $PROJNAME
-    rm -f $TMPDIR/github_deploy_config.json
+    rm -f $CTMPDIR/github_deploy_config.json
 }
 trap cleanup EXIT
 
@@ -128,11 +128,11 @@ require cookiecutter
 CURDIR=`pwd`
 
 # move to temporary directory, to be save and not clutter original workspace
-cd $TMPDIR
+cd $CTMPDIR
 
-prepare_cookie_config $TMPDIR/github_deploy_config.json
+prepare_cookie_config $CTMPDIR/github_deploy_config.json
 echo "Running test script..."
-cookiecutter --config-file $TMPDIR/github_deploy_config.json --no-input $CURDIR
+cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
 (
     cd ./$PROJNAME
 

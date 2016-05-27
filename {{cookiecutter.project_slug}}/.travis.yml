@@ -2,28 +2,54 @@ language: python
 
 matrix:
     include:
-        - python: 2.7
+        - os: linux
+          python: 2.7
           env: TOXENV=py27
-        - python: 3.3
+        - os: linux
+          python: 3.3
           env: TOXENV=py32 VENVVER="<14.0.0" PIPVER="<8.0.0"
-        - python: 3.3
+        - os: linux
+          python: 3.3
           env: TOXENV=py33
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34
-        - python: 3.5
+        - os: linux
+          python: 3.5
           env: TOXENV=py35 DOCKER=1
-        - python: 3.5-dev
+        - os: linux
+          python: 3.5-dev
           env: TOXENV=py35
-        - python: nightly
+        - os: linux
+          python: nightly
           env: TOXENV=py36
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=docs
-        - python: 2.7
+        - os: linux
+          python: 2.7
           env: TOXENV=pep8
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py3pep8
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=packaging
+        - os: osx
+          language: generic
+          env: TOXENV=py35
+        - os: osx
+          language: generic
+          env: TOXENV=py34
+        - os: osx
+          language: generic
+          env: TOXENV=py33
+        - os: osx
+          language: generic
+          env: TOXENV=py32
+        - os: osx
+          language: generic
+          env: TOXENV=py27
     allow_failures:
         - python: 3.4
           env:
@@ -44,9 +70,8 @@ services:
   - docker
 
 install:
-  - pip install --upgrade virtualenv$VENVVER pip$PIPVER setuptools tox
-  - pip install --upgrade versioneer
-  - versioneer install
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash ./.travis/install_linux.sh ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./.travis/install_osx.sh ; fi
 
 before_script:
 # last commit message
@@ -55,12 +80,11 @@ before_script:
 
 
 script:
-  - pip -V
-  - tox --notest
-  - tox -- -n 8
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then tox --notest && tox -- -n 8 ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./.travis/run_osx.sh ; fi
 
   # deploy to pypi-test and run docker tests only with special commit message and only from py3.5 worker
-  - if [[ $COM_MSG == DOCKER* ]] && [[ $DOCKER == 1 ]]; then bash .travis/run_docker_tests.sh {{ cookiecutter.distribution_name }}; fi
+  - if [[ $COM_MSG == DOCKER* ]] && [[ $DOCKER == 1 ]] && [[ $TRAVIS_OS_NAME == "linux" ]]; then bash .travis/run_docker_tests.sh {{ cookiecutter.distribution_name }}; fi
 
 
 deploy:

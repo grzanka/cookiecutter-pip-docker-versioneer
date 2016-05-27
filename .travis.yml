@@ -15,42 +15,66 @@ dist: trusty
 # other elements like "docs" will be used to test correctness of template documentation
 matrix:
     include:
-        - python: 2.7
+        - os: linux
+          python: 2.7
           env: TOXENV=py27-proj27
-        - python: 3.3
+        - os: linux
+          python: 3.3
           env: TOXENV=py33-proj33
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34-proj34
-        - python: 3.5
+        - os: linux
+          python: 3.5
           env: TOXENV=py35-proj35
-        - python: 3.5-dev
+        - os: linux
+          python: 3.5-dev
           env: TOXENV=py35-proj35
         # travis nightly points to python 3.6 now
-        - python: nightly
+        - os: linux
+          python: nightly
           env: TOXENV=py36-proj36
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=docs
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34-projdocs
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34-projpackaging
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34-projpy3pep8
-        - python: 2.7
+        - os: linux
+          python: 2.7
           env: TOXENV=py27-projpep8
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env:
             - TOXENV=testdeploy
            # GitHub secured token, you need to update it to your own if you want to use it
             - secure: "TvwFrRVjQzxnvMjV5Spo/WAfWOIjOR4j91dBqRaykyG2WLkAS95iOwkNaa0OAcqDQf6uFJ2so54qpz8yPCZ+540hu3AspN2aeSS9IBmhia8CZ592BHm+plT2FPQZMC4PzXtG3eW1VnL+3Skvzwe4v6Qzffai8YdEWDnMYOrq8QkDeJnP2YqhatyrBih3FIhXWsNxk//5FHm7OEtQAAFhm4cjf2+vlhCE79kO3ynK/SXJuNXUk6+aKlnvus4Ya6kvMLihq+pE6+1pP/zn/YBU6u2qtR8/xg8oLP3FwrzAgczInlAeC8aRZVhknTtdmJQJcPyteSwAtrdeLST/uvHyYdBC1EVEntx08mDpUJqsEn7usGPsx+4GCJQ6VoBppvE9MutAitfDQV0xEQrb3ESM2mFJ1rX6vNVd6GSp5cX7Ko8rMneD4o8/PNUwRnmL0hu14GiVvd1up3pFT2a1Q0y19TIMRPbHx6Qdhl3Qa13Owa2p4tzGJzmntOD1dtdYahSXoV5Gc+uWLgCz9LnCLgvW2l8cyegz8kM7bLjrUdB3sj2b5QQZSeKWIrm5X7yk6ny2I8IwhIT0YSi7DJVOwENyaxAudrijzQZ3rxJJy2CfUPX8w7vrvZwLSisvQhqKHR3maVWx/q8CJ08uvI0ydGgjMo8TS4dZc9aHtAcwgFVGfTQ="
-        - python: 3.4
+        - os: linux
+          python: 3.4
           env: TOXENV=py34-projcov
+        - os: osx
+          language: generic
+          env: TOXENV=py35-proj35
+        - os: osx
+          language: generic
+          env: TOXENV=py34-proj34
+        - os: osx
+          language: generic
+          env: TOXENV=py33-proj33
+        - os: osx
+          language: generic
+          env: TOXENV=py27-proj27
     allow_failures:
         - env: TOXENV=py34-projcov
 
 # check versions of tools, might be useful for debugging
 before_install:
-  - lsb_release -a  # Ubuntu version
   - uname -a        # kernel version
   - python --version
   - virtualenv --version
@@ -58,8 +82,10 @@ before_install:
 
 # upgrade virtualenv and tox
 install:
-  - pip install --upgrade virtualenv tox
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash ./.travis/install_linux.sh ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./.travis/install_osx.sh ; fi
 
 # run tox tests
 script:
-  - tox
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then tox ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./.travis/run_osx.sh ; fi
