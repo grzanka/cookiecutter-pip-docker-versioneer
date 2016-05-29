@@ -34,7 +34,7 @@ An example
 
 Checkout a repository generated with this template:
 
-* https://github.com/grzankatest/python-cookie01
+* https://github.com/grzankatest/python-cookie05
 
 
 

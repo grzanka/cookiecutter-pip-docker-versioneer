@@ -25,6 +25,9 @@ fi
 brew update || brew update
 brew unlink pyenv && brew install pyenv && brew link pyenv
 
+# Also git will be needed later
+brew unlink git && brew install git && brew link git
+
 # setup pyenv
 PYENV_ROOT="$HOME/.pyenv"
 PATH="$PYENV_ROOT/bin:$PATH"
@@ -55,4 +58,4 @@ esac
 pyenv rehash
 
 # install virtualenv and tox
-pyenv exec pip install --upgrade virtualenv tox
+pyenv exec pip install --upgrade virtualenv pip tox
