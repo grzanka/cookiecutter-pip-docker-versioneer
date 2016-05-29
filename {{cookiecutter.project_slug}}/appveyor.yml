@@ -1,32 +1,30 @@
-# What Python version is installed where:
-# http://www.appveyor.com/docs/installed-software#python
-
 # based on https://github.com/audreyr/cookiecutter/blob/master/appveyor.yml
 
-# validation page: https://ci.appveyor.com/tools/validate-yaml
+# validation page for appveyor config: https://ci.appveyor.com/tools/validate-yaml
 
 environment:
   matrix:
     - PYTHON: "C:\\Python27"
       TOX_ENV: "py27"
 
-#    - PYTHON: "C:\\Python27-x64"
-#      TOX_ENV: "py27"
-#
+    - PYTHON: "C:\\Python27-x64"
+      TOX_ENV: "py27"
+
+#  temporarily disabled as Appveyor seems to have broken config of Python 3.3
 #    - PYTHON: "C:\\Python33"
 #      TOX_ENV: "py33"
 #
 #    - PYTHON: "C:\\Python33-x64"
 #      TOX_ENV: "py33"
-#
-#    - PYTHON: "C:\\Python34"
-#      TOX_ENV: "py34"
-#
-#    - PYTHON: "C:\\Python34-x64"
-#      TOX_ENV: "py34"
-#
-#    - PYTHON: "C:\\Python35"
-#      TOX_ENV: "py35"
+
+    - PYTHON: "C:\\Python34"
+      TOX_ENV: "py34"
+
+    - PYTHON: "C:\\Python34-x64"
+      TOX_ENV: "py34"
+
+    - PYTHON: "C:\\Python35"
+      TOX_ENV: "py35"
 
     - PYTHON: "C:\\Python35-x64"
       TOX_ENV: "py35"
@@ -61,7 +59,7 @@ install:
   - "%PYTHON%/Scripts/pip install tox"
   - "%PYTHON%/Scripts/pip install wheel"
 
-build: false  # Not a C# project, build stuff at the test step instead.
+build: false
 
 test_script:
   - "%PYTHON%/Scripts/tox -e %TOX_ENV%"

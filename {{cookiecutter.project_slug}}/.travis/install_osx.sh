@@ -21,6 +21,15 @@ then
     exit 0
 fi
 
+# At this point we run default Python 2.7 interpreter
+# versioneer doesn't support Python 3.2, so we run it now with current interpreter
+# for other interpreters pointed out by TOXENV look at the end of the script
+if [[ $TOXENV == py32* ]] ;
+then
+    pip install --user --upgrade versioneer
+    $HOME/Library/Python/2.7/bin/versioneer install
+fi
+
 # For Python 3, first install pyenv
 brew update || brew update
 brew unlink pyenv && brew install pyenv && brew link pyenv
@@ -61,7 +70,13 @@ esac
 
 pyenv rehash
 
-# install virtualenv and tox
-pyenv exec pip install --upgrade virtualenv$VENVVER pip$PIPVER setuptools tox
-pyenv exec pip install --upgrade versioneer
-pyenv exec versioneer install
+# install virtualenv and tox ($VENVVER and $PIPVER is set only for python 3.2)
+pyenv exec pip install --upgrade virtualenv$VENVVER pip$PIPVER tox
+
+# versioneer doesn't support Python 3.2, if TOXENV=py32 versioneer was set up at the begining of the script
+# for other interpreters we run it here with such interpreter as TOXENV points out
+if [[ $TOXENV != py32* ]] ;
+then
+    pyenv exec pip install --upgrade versioneer
+    pyenv exec versioneer install
+fi

@@ -13,11 +13,12 @@ environment:
     - PYTHON: "C:\\Python27-x64"
       TOX_ENV: "py27-proj27"
 
-    - PYTHON: "C:\\Python33"
-      TOX_ENV: "py33-proj33"
-
-    - PYTHON: "C:\\Python33-x64"
-      TOX_ENV: "py33-proj33"
+#  temporarily disabled as Appveyor seems to have broken config of Python 3.3
+#    - PYTHON: "C:\\Python33"
+#      TOX_ENV: "py33-proj33"
+#
+#    - PYTHON: "C:\\Python33-x64"
+#      TOX_ENV: "py33-proj33"
 
     - PYTHON: "C:\\Python34"
       TOX_ENV: "py34-proj34"
