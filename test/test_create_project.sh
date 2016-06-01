@@ -45,6 +45,41 @@ default_context:
 EOT
 }
 
+
+write_pypirc() {
+PYPIRC=~/.pypirc
+USERNAME=${1}
+PASSWORD=${2}
+
+if [ -e "${PYPIRC}" ]; then
+    rm ${PYPIRC}
+fi
+
+touch ${PYPIRC}
+cat <<pypirc >${PYPIRC}
+[distutils]
+index-servers =
+    pypi
+    pypitest
+
+[pypi]
+repository: https://pypi.python.org/pypi
+username: ${USERNAME}
+password: ${PASSWORD}
+
+[pypitest]
+repository: https://testpypi.python.org/pypi
+username: ${USERNAME}
+password: ${PASSWORD}
+pypirc
+
+if [ ! -e "${PYPIRC}" ]; then
+    echo "ERROR: Unable to write file ~/.pypirc"
+    exit 1
+fi
+}
+
+
 setup_travis() {
         # install travis client
         ruby -v
@@ -69,6 +104,37 @@ setup_travis() {
 
         # listing repos
         travis repos
+}
+
+
+
+setup_deploy_to_pypi() {
+        GITHUBREPO=python-$PROJNAME
+        # install travis client
+        ruby -v
+        gem install travis -q --no-rdoc --no-ri
+        travis version
+
+        echo "Logging to travis"
+        # disable printing bash command to hide GITHUBTOKEN
+        set +x
+        travis login --org -g $GITHUBTOKEN -u $GITHUBUSER --no-manual --no-interactive
+        set -x
+        travis whoami
+
+        set +x
+        ENCPYPIPASS=`travis encrypt PYPIPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
+        ENCPYPITESTPASS=`travis encrypt PYPITESTPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
+        write_pypirc $GITHUBUSER $PYPIPASS
+        set -x
+
+        sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
+        sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
+
+        pip install wheel
+        python setup.py bdist_wheel
+
+        python setup.py register -r pypitest --show-response -v
 }
 
 
@@ -97,10 +163,11 @@ https://$GITHUBUSER:$GITHUBTOKEN@github.com
 EOF
         set -x
 
-        git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
-
         # now move to directory containing repo and push it to remote
         cd $1
+
+        git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
+
         git push -u origin master
 
         # add informative header to generated travis file
@@ -126,6 +193,7 @@ require cookiecutter
 
 # save current directory
 CURDIR=`pwd`
+export HOME=`pwd`/..
 
 # move to temporary directory, to be save and not clutter original workspace
 cd $CTMPDIR
@@ -137,7 +205,6 @@ cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
     cd ./$PROJNAME
 
     # creating git repository here and adding all files
-    export HOME=`pwd`
     git config --global user.email $EMAIL
     git config --global user.name $NAME
     git init .
@@ -162,6 +229,9 @@ cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
     # if github deploy enabled, put this repository to github and run travis tests
     if [[ $DEPLOY -eq 1 ]]
     then
+        # test pypi
+        setup_deploy_to_pypi
+
         if [ $TRAVIS_BRANCH = "master" -a $TRAVIS_PULL_REQUEST = "false" ]
         then
             deploy_to_github `pwd`

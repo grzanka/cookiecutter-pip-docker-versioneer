@@ -88,6 +88,13 @@ Installation
 
     pip install {{ cookiecutter.distribution_name }}
 
+
+:: Development version
+
+    pip install -i https://testpypi.python.org/pypi {{ cookiecutter.distribution_name }}
+
+
+
 Documentation
 =============
 

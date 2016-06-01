@@ -1,15 +1,20 @@
-import setuptools
 import sys
-
+import setuptools
 {%- if cookiecutter.versioneer|lower == 'yes' %}
+from pkg_resources import parse_version
 try:
     import versioneer
 except ImportError:
     # dirty hack needed by readthedoc generation tool
     import subprocess
-
     subprocess.call(["versioneer", "install"])
     import versioneer
+
+version = versioneer.get_version()
+parsed_version = parse_version(version)
+if '*@' in parsed_version[1]:
+    import time
+    version += str(int(time.time()))
 {% endif %}
 
 packages = ['{{ cookiecutter.package_name }}']
@@ -23,7 +28,7 @@ with open('README.rst') as readme_file:
 
 setuptools.setup(
     name='{{ cookiecutter.distribution_name }}',
-    version=versioneer.get_version(),
+    version=version,
     packages=packages,
     url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}',
     license='GPL',
@@ -47,9 +52,12 @@ setuptools.setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     entry_points={
         'console_scripts': [

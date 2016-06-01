@@ -18,24 +18,24 @@ then
     pip install --user --upgrade pip
     pip install --user --upgrade virtualenv
     pip install --user --upgrade tox
-    exit 0
 fi
 
 # At this point we run default Python 2.7 interpreter
 # versioneer doesn't support Python 3.2, so we run it now with current interpreter
 # for other interpreters pointed out by TOXENV look at the end of the script
-if [[ $TOXENV == py32* ]] ;
+if [[ $TOXENV == py32* ]] || [[ $TOXENV == py27* ]];
 then
     pip install --user --upgrade versioneer
     $HOME/Library/Python/2.7/bin/versioneer install
 fi
 
+# For native python 2.7 we can jump out
+if [[ $TOXENV == py27* ]] ; then exit 0; fi
+
+
 # For Python 3, first install pyenv
 brew update || brew update
 brew unlink pyenv && brew install pyenv && brew link pyenv
-
-# Also git will be needed later
-brew unlink git && brew install git && brew link git
 
 # setup pyenv
 PYENV_ROOT="$HOME/.pyenv"
@@ -43,6 +43,8 @@ PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 # install Python 3.x
+# TODO find the way to make it faster (use pre-installed python versions on travis?)
+# this is most time-consuming issue, now takes about 2 min
 case "${TOXENV}" in
         py32*)
             pyenv install 3.2
@@ -65,9 +67,10 @@ case "${TOXENV}" in
             pyenv global 3.6-dev
             ;;
         *)
-        exit 1
+            exit 1
 esac
 
+# TODO comment needed
 pyenv rehash
 
 # install virtualenv and tox ($VENVVER and $PIPVER is set only for python 3.2)
