@@ -213,6 +213,12 @@ cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
 
     # generating versioneeer files
     pip install versioneer
+
+    # install dependencies
+    PYTHON_VERSION="py3"
+    if [[ $TOXENV == "py27" ]]; then PYTHON_VERSION="py2" ; fi
+    sudo bash ./install_deps.sh $PYTHON_VERSION
+
     pip install -r requirements.txt
     versioneer install
 

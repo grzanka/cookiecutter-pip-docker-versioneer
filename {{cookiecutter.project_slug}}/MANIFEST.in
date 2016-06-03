@@ -17,4 +17,5 @@
   exclude .travis.yml
   exclude appveyor.yml
   prune .travis
+  prune install_deps.sh
 
