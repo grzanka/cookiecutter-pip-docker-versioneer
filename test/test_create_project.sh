@@ -136,6 +136,8 @@ setup_deploy_to_pypi() {
         python setup.py bdist_wheel
 
         python setup.py register -r pypitest --show-response -v
+
+        git status
 }
 
 
@@ -169,6 +171,11 @@ EOF
 
         git remote add origin https://github.com/$GITHUBUSER/$GITHUBREPO.git
 
+        git push -u origin master
+
+        # commiting modified readme and pushing to remote
+        git add .travis.yml
+        git commit -m "travis config updated"
         git push -u origin master
 
         # add informative header to generated travis file
