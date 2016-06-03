@@ -170,6 +170,11 @@ EOF
 
         git push -u origin master
 
+        # commiting modified travis cfg and pushing to remote
+        git add .travis.yml
+        git commit -m "travis config updated"
+        git push -u origin master
+
         # add informative header to generated travis file
         TMPFILE=mktemp
         cp README.rst $TMPFILE
