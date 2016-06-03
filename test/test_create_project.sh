@@ -115,29 +115,11 @@ setup_travis() {
 
 # install travis client, build package and register it in pypitest repo
 setup_deploy_to_pypi() {
-
-        # install travis client
-        ruby -v
-        gem install travis -q --no-rdoc --no-ri
-        travis version
-
-        echo "Logging to travis"
-        # disable printing bash command to hide GITHUBTOKEN
         set +x
-        travis login --org -g $GITHUBTOKEN -u $GITHUBUSER --no-manual --no-interactive
-        set -x
-        travis whoami
-
-        set +x
-        ENCPYPIPASS=`travis encrypt PYPIPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
-        ENCPYPITESTPASS=`travis encrypt PYPITESTPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
         write_pypirc $GITHUBUSER $PYPIPASS
         set -x
 
-        sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
-        sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
-
-        pip install --upgrade wheel
+        pip install wheel
         python setup.py bdist_wheel
 
         python setup.py register -r pypitest --show-response -v
@@ -176,6 +158,12 @@ EOF
         git push -u origin master
 
         # commiting modified travis cfg and pushing to remote
+        set +x
+        ENCPYPIPASS=`travis encrypt PYPIPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
+        ENCPYPITESTPASS=`travis encrypt PYPITESTPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
+        sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
+        sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
+        set -x
         git add .travis.yml
         git commit -m "travis config updated"
         git push -u origin master
