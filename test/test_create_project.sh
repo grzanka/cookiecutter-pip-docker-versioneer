@@ -130,6 +130,7 @@ setup_deploy_to_pypi() {
 
         sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
         sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
+        cat .travis.yml
 
         pip install wheel
         python setup.py bdist_wheel
