@@ -25,9 +25,6 @@ fi
 brew update || brew update
 brew unlink pyenv && brew install pyenv && brew link pyenv
 
-# Also git will be needed later
-brew unlink git && brew install git && brew link git
-
 # setup pyenv
 PYENV_ROOT="$HOME/.pyenv"
 PATH="$PYENV_ROOT/bin:$PATH"
