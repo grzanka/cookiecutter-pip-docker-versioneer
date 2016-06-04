@@ -122,7 +122,7 @@ setup_deploy_to_pypi() {
         pip install wheel
         python setup.py bdist_wheel
 
-        python setup.py register -r pypitest --show-response -v
+#        python setup.py register -r pypitest --show-response -v
 }
 
 # deploy package to github
@@ -164,8 +164,6 @@ EOF
         sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
         sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
         set -x
-        echo $PYPIPASS
-        echo $PYPITESTPASS
         git add .travis.yml
         git commit -m "travis config updated"
         git push -u origin master

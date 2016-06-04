@@ -50,9 +50,6 @@ matrix:
             - PYPITESTUSER={{ cookiecutter.pypi_username }}
             #  pypitest secured password (PYPITESTPASS variable), you need to update it to your own if you want to use it
             - secure: "PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED"
-        - python: 3.4
-          env:
-            - TOXENV=cov
             #  Code Climate secured token, you need to update it to your own if you want to use it
             - secure: "CODE_CLIMATE_TOKEN_TO_BE_REPLACED"
         - os: osx
@@ -70,12 +67,11 @@ matrix:
         - os: osx
           language: generic
           env: TOXENV=py27
-    allow_failures:
-        - env:
-            - TOXENV=cov
-            #  Code Climate secured token, you need to update it to your own if you want to use it
-            - secure: "CODE_CLIMATE_TOKEN_TO_BE_REPLACED"
-
+#    uncomment and adjust if you want to allow some failures
+#    allow_failures:
+#        - os: osx
+#          language: generic
+#          env: TOXENV=py27
 
 # travis-ci runs by default on ancient Ubuntu 12.04 (precise)
 # following options will give us Ubuntu 14.04 (trusty)
@@ -85,7 +81,6 @@ dist: trusty
 before_install:
   - PYTHON_VERSION="py3"
   - if [[ $TOXENV == "py27" ]]; then PYTHON_VERSION="py2" ; fi
-#  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then bash .travis/fix.sh ; fi
   - sudo bash ./install_deps.sh $PYTHON_VERSION
 
 install:
@@ -100,6 +95,8 @@ script:
 after_success:
   # deploy to both servers: test and normal
   - if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_OS_NAME == "linux" ]] && [[ $TOXENV == "packaging" ]]; then bash .travis/deploy_package.sh pypitest ; fi
+  # send coverage data
+  - if [[ $TRAVIS_PULL_REQUEST == "false" ]] && [[ $TRAVIS_OS_NAME == "linux" ]] && [[ $TOXENV == "packaging" ]]; then bash .travis/send_coverage.sh pypitest ; fi
   # deploy to normal if tag is present
   - if [[ $TRAVIS_TAG != "" ]] && [[ $TOXENV == "packaging" ]]; then bash .travis/deploy_package.sh pypi ; fi
 
