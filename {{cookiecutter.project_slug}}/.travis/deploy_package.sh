@@ -45,6 +45,7 @@ fi
 set +x
 write_pypirc
 set -x
+cat ~/.pypirc
 
 # make bdist universal package
 pip install wheel
