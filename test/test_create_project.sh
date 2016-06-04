@@ -18,22 +18,26 @@ if [ -z "$2" ]
     DEPLOY=0
 fi
 
+# global settings
 CTMPDIR=`mktemp -d -t XXXXXXXX`
 PROJNAME="cookie05"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
 GITHUBUSER="grzankatest"
+GITHUBREPO=python-$PROJNAME
 
 require() {
     type $1 >/dev/null 2>/dev/null
 }
 
+#on exit remove generated files
 cleanup() {
     rm -rf $PROJNAME
     rm -f $CTMPDIR/github_deploy_config.json
 }
 trap cleanup EXIT
 
+# save cookiecutter config with default values
 prepare_cookie_config() {
     cat <<EOT > $1
 default_context:
@@ -42,10 +46,12 @@ default_context:
     github_username: $GITHUBUSER
     project_name: $PROJNAME
     requiresio: "yes"
+    codeclimate: "yes"
 EOT
 }
 
-
+# write ~/.pypirc file with plaintext password
+# TODO figureout if plain-text password can be avoided
 write_pypirc() {
 PYPIRC=~/.pypirc
 USERNAME=${1}
@@ -79,7 +85,7 @@ if [ ! -e "${PYPIRC}" ]; then
 fi
 }
 
-
+# setup travis client, login and re-enable builds for repo
 setup_travis() {
         # install travis client
         ruby -v
@@ -107,9 +113,9 @@ setup_travis() {
 }
 
 
-
+# install travis client, build package and register it in pypitest repo
 setup_deploy_to_pypi() {
-        GITHUBREPO=python-$PROJNAME
+
         # install travis client
         ruby -v
         gem install travis -q --no-rdoc --no-ri
@@ -131,15 +137,14 @@ setup_deploy_to_pypi() {
         sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
         sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
 
-        pip install wheel
+        pip install --upgrade wheel
         python setup.py bdist_wheel
 
         python setup.py register -r pypitest --show-response -v
 }
 
-
+# deploy package to github
 deploy_to_github() {
-        GITHUBREPO=python-$PROJNAME
 
         # remove repo, if exists
         echo "Attempt to delete repo $GITHUBREPO (username $GITHUBUSER)"
