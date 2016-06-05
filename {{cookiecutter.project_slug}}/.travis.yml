@@ -50,7 +50,7 @@ matrix:
             - PYPITESTUSER={{ cookiecutter.pypi_username }}
             #  pypitest secured password (PYPITESTPASS variable), you need to update it to your own if you want to use it
             - secure: "PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED"
-            #  Code Climate secured token, you need to update it to your own if you want to use it
+            #  Code Climate secured token (CODECLIMATE_REPO_TOKEN variable), you need to update it to your own if you want to use it
             - secure: "CODE_CLIMATE_TOKEN_TO_BE_REPLACED"
         - os: osx
           language: generic

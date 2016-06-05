@@ -161,8 +161,10 @@ EOF
         set +x
         ENCPYPIPASS=`travis encrypt PYPIPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
         ENCPYPITESTPASS=`travis encrypt PYPITESTPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
+        ENCCODECLIMATETOKEN=`travis encrypt CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN -r $GITHUBUSER/$GITHUBREPO`
         sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
         sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
+        sed -i "s#\"CODE_CLIMATE_TOKEN_TO_BE_REPLACED\"#${ENCCODECLIMATETOKEN}#g" .travis.yml
         set -x
         git add .travis.yml
         git commit -m "travis config updated"
