@@ -95,5 +95,6 @@ install:
 
 # run tox tests
 script:
+  - if [[ $TRAVIS_OS_NAME == "linux" ]]; then travis_wait 60 bash ./.travis/pre_install.sh ; fi
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then travis_wait 60 tox ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait bash ./.travis/run_osx.sh ; fi

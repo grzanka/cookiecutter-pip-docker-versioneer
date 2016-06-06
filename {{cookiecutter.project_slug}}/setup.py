@@ -1,4 +1,3 @@
-import sys
 import setuptools
 {%- if cookiecutter.versioneer|lower == 'yes' %}
 from pkg_resources import parse_version
@@ -17,20 +16,14 @@ if '*@' in parsed_version[1]:
     version += str(int(time.time()))
 {% endif %}
 
-packages = ['{{ cookiecutter.package_name }}']
-tests_flag = '--add_tests'
-if tests_flag in sys.argv:
-    sys.argv.remove(tests_flag)
-    packages.append('{{ cookiecutter.package_name }}.test')
-
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 setuptools.setup(
     name='{{ cookiecutter.distribution_name }}',
     version=version,
-    packages=packages,
-    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}',
+    packages=['{{ cookiecutter.package_name }}'],
+    url='https://github.com/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}',
     license='GPL',
     author='{{ cookiecutter.full_name }}',
     author_email='{{ cookiecutter.email }}',
