@@ -7,42 +7,15 @@
 
 environment:
   matrix:
-    - PYTHON: "C:\\Python27"
-      TOX_ENV: "py27-proj27"
+    - platform: x86
+      PYTHON: "C:\\Python27"
+      PYTHON_VERSION: "2.7"
+      TOX_ENV: "27"
 
-    - PYTHON: "C:\\Python27-x64"
-      TOX_ENV: "py27-proj27"
-
-#  temporarily disabled as Appveyor seems to have broken config of Python 3.3
-#    - PYTHON: "C:\\Python33"
-#      TOX_ENV: "py33-proj33"
-#
-#    - PYTHON: "C:\\Python33-x64"
-#      TOX_ENV: "py33-proj33"
-
-    - PYTHON: "C:\\Python34"
-      TOX_ENV: "py34-proj34"
-
-    - PYTHON: "C:\\Python34-x64"
-      TOX_ENV: "py34-proj34"
-
-    - PYTHON: "C:\\Python35"
-      TOX_ENV: "py35-proj35"
-
-    - PYTHON: "C:\\Python35-x64"
-      TOX_ENV: "py35-proj35"
-
-    - PYTHON: "C:\\Python34-x64"
-      TOX_ENV: "py34-projdocs"
-
-    - PYTHON: "C:\\Python34-x64"
-      TOX_ENV: "py34-projpackaging"
-
-    - PYTHON: "C:\\Python27-x64"
-      TOX_ENV: "py34-projpy3pep8"
-
-    - PYTHON: "C:\\Python34-x64"
-      TOX_ENV: "py34-projpep8"
+    - platform: x64
+      PYTHON: "C:\\Python34"
+      PYTHON_VERSION: "3.4"
+      TOX_ENV: "34"
 
 # here we can latter build matrix items which are allowed to fail
 #matrix:
@@ -54,15 +27,30 @@ environment:
 init:
   - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
   - "git config --system http.sslcainfo \"C:\\Program Files\\Git\\mingw64\\ssl\\certs\\ca-bundle.crt\""
-  - "%PYTHON%/python -V"
+  - python -V
   - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
-  - "%PYTHON%/Scripts/easy_install -U pip"
-  - "%PYTHON%/Scripts/pip install tox"
-  - "%PYTHON%/Scripts/pip install wheel"
+  - set PATH=C:\Miniconda\Scripts
+  - ps: If ($env:Platform -Match "x64") {$env:PATH="C:\Miniconda-x64\Scripts"}
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
 
-build: false  # Not a C# project, build stuff at the test step instead.
+# create and activate Conda virtualenv
+  - conda create -q --name python%PYTHON_VERSION% python=%PYTHON_VERSION%
+  - activate python%PYTHON_VERSION%
+  - python -V
+
+# install dependencies
+  - conda install -q --name python%PYTHON_VERSION% setuptools wheel numpy scipy
+  - pip install -r {{cookiecutter.project_slug}}/tests/requirements-test.txt
+  - pip install -r {{cookiecutter.project_slug}}/requirements.txt
+
+before_test:
+  - python -c "import numpy as np;print(np.version.version)"
+  - python -c "import scipy as sp;print(sp.version.version)"
+
+build: false
 
 test_script:
-  - "%PYTHON%/Scripts/tox -e %TOX_ENV%"
+  - bash test/test_create_project_win.sh %TOX_ENV%
