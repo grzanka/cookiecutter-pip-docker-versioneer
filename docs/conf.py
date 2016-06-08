@@ -109,7 +109,7 @@ html_theme = 'default'
 
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
-#html_title = 'onehundredseven v'
+#html_title = 'cookiecutter-pip-docker-versioneer v'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
@@ -191,7 +191,7 @@ html_static_path = []
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'onehundredsevendoc'
+htmlhelp_basename = 'cookiecutter-pip-docker-versioneer'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -213,7 +213,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'onehundredseven.tex', 'onehundredseven Documentation',
+    (master_doc, 'cookiecutter-pip-docker-versioneer.tex', 'cookiecutter-pip-docker-versioneer Documentation',
      'Author', 'manual'),
 ]
 
@@ -243,7 +243,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'onehundredseven', 'onehundredseven Documentation',
+    (master_doc, 'cookiecutter-pip-docker-versioneer', 'cookiecutter-pip-docker-versioneer Documentation',
      [author], 1)
 ]
 
@@ -257,8 +257,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'onehundredseven', 'onehundredseven Documentation',
-     author, 'onehundredseven', 'One line description of project.',
+    (master_doc, 'cookiecutter-pip-docker-versioneer', 'cookiecutter-pip-docker-versioneer Documentation',
+     author, 'cookiecutter-pip-docker-versioneer', 'One line description of project.',
      'Miscellaneous'),
 ]
 
