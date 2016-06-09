@@ -5,9 +5,11 @@
 .. image:: https://img.shields.io/pypi/v/{{ cookiecutter.repo_name }}.svg
         :target: https://pypi.python.org/pypi/{{ cookiecutter.repo_name }}
 
+{%- if cookiecutter.travis|lower == 'yes' %}
 .. image:: https://img.shields.io/travis/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}.svg
         :target: https://travis-ci.org/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}
 
+{% endif %}
 .. image:: https://readthedocs.org/projects/{{ cookiecutter.repo_name }}/badge/?version=latest
         :target: https://readthedocs.org/projects/{{ cookiecutter.repo_name }}/?badge=latest
         :alt: Documentation Status
@@ -37,9 +39,9 @@ Overview
     :alt: Documentation Status
 {{ '' }}
 {%- if cookiecutter.travis|lower == 'yes' %}
-.. |travis| image:: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}.svg?branch=master
+.. |travis| image:: https://travis-ci.org/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}.svg?branch=master
     :alt: Travis-CI Build Status
-    :target: https://travis-ci.org/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}
+    :target: https://travis-ci.org/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}
 {% endif %}
 {%- if cookiecutter.appveyor|lower == 'yes' %}
 .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}?branch=master&svg=true
@@ -84,15 +86,19 @@ Overview
 Installation
 ============
 
-::
+Stable version ::
 
     pip install {{ cookiecutter.distribution_name }}
 
 
-:: Development version
+Development version from PyPI test server ::
 
     pip install -i https://testpypi.python.org/pypi {{ cookiecutter.distribution_name }}
 
+
+Development version from GIT ::
+
+    pip install git+https://github.com/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}.git
 
 
 Documentation
