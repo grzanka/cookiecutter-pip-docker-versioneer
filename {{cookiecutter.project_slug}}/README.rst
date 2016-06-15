@@ -91,11 +91,6 @@ Stable version ::
     pip install {{ cookiecutter.distribution_name }}
 
 
-Development version from PyPI test server ::
-
-    pip install -i https://testpypi.python.org/pypi {{ cookiecutter.distribution_name }}
-
-
 Development version from GIT ::
 
     pip install git+https://github.com/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}.git

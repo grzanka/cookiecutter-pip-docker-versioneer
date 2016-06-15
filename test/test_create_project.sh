@@ -66,17 +66,12 @@ cat <<pypirc >${PYPIRC}
 [distutils]
 index-servers =
     pypi
-    pypitest
 
 [pypi]
 repository: https://pypi.python.org/pypi
 username: ${USERNAME}
 password: ${PASSWORD}
 
-[pypitest]
-repository: https://testpypi.python.org/pypi
-username: ${USERNAME}
-password: ${PASSWORD}
 pypirc
 
 if [ ! -e "${PYPIRC}" ]; then
@@ -113,7 +108,7 @@ setup_travis() {
 }
 
 
-# install travis client, build package and register it in pypitest repo
+# install travis client, build package
 setup_deploy_to_pypi() {
         set +x
         write_pypirc $GITHUBUSER $PYPIPASS
@@ -122,7 +117,7 @@ setup_deploy_to_pypi() {
         pip install wheel
         python setup.py bdist_wheel
 
-#        python setup.py register -r pypitest --show-response -v
+#        python setup.py register--show-response -v
 }
 
 # deploy package to github
@@ -160,10 +155,8 @@ EOF
         # commiting modified travis cfg and pushing to remote
         set +x
         ENCPYPIPASS=`travis encrypt PYPIPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
-        ENCPYPITESTPASS=`travis encrypt PYPITESTPASS=$PYPIPASS -r $GITHUBUSER/$GITHUBREPO`
         ENCCODECLIMATETOKEN=`travis encrypt CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN -r $GITHUBUSER/$GITHUBREPO`
         sed -i "s#\"PYPI_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPIPASS}#g" .travis.yml
-        sed -i "s#\"PYPITEST_PASS_ENCRYPTED_TO_BE_REPLACED\"#${ENCPYPITESTPASS}#g" .travis.yml
         sed -i "s#\"CODE_CLIMATE_TOKEN_TO_BE_REPLACED\"#${ENCCODECLIMATETOKEN}#g" .travis.yml
         set -x
         git add .travis.yml
