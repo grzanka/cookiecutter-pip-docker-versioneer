@@ -53,4 +53,6 @@ before_test:
 build: false
 
 test_script:
+  - C:\msys64\usr\bin\bash -lc "pwd"
+  - C:\msys64\usr\bin\bash -lc "ls -al"
   - C:\msys64\usr\bin\bash -lc "test/test_create_project_win.sh %TOX_ENV%"
