@@ -25,14 +25,14 @@ environment:
 
 
 init:
-  - set PATH=%PYTHON%;%PYTHON%\Scripts;%PATH%
+  - set PATH=C:\msys64\usr\bin;%PYTHON%;%PYTHON%\Scripts;%PATH%
   - "git config --system http.sslcainfo \"C:\\Program Files\\Git\\mingw64\\ssl\\certs\\ca-bundle.crt\""
   - python -V
   - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
-  - set PATH=C:\Miniconda\Scripts
-  - ps: If ($env:Platform -Match "x64") {$env:PATH="C:\Miniconda-x64\Scripts"}
+  - set PATH=C:\Miniconda\Scripts;%PATH%
+  - ps: If ($env:Platform -Match "x64") {$env:PATH="C:\Miniconda-x64\Scripts";%PATH%}
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
 
@@ -53,4 +53,4 @@ before_test:
 build: false
 
 test_script:
-  - C:\msys64\usr\bin\bash test/test_create_project_win.sh %TOX_ENV%
+  - C:\msys64\usr\bin\bash -lc "test/test_create_project_win.sh %TOX_ENV%"
