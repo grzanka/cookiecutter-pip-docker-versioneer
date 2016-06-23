@@ -60,4 +60,4 @@ test_script:
   - C:\msys64\usr\bin\bash -c "ls -al"
   - C:\msys64\usr\bin\bash -lc "pwd"
   - C:\msys64\usr\bin\bash -lc "ls -al"
-  - C:\msys64\usr\bin\bash -lc "%APPVEYOR_BUILD_FOLDER%/test/test_create_project_win.sh %TOX_ENV%"
+  - C:\msys64\usr\bin\bash -c "test/test_create_project_win.sh %TOX_ENV%"
