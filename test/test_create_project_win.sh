@@ -19,23 +19,12 @@ if [ -z "$2" ]
 fi
 
 # global settings
-CTMPDIR=`mktemp -d -t XXXXXXXX`
+CTMPDIR=$TEMP
 PROJNAME="cookie05"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
 GITHUBUSER="grzankatest"
 GITHUBREPO=python-$PROJNAME
-
-require() {
-    type $1 >/dev/null 2>/dev/null
-}
-
-#on exit remove generated files
-cleanup() {
-    rm -rf $PROJNAME
-    rm -f $CTMPDIR/github_deploy_config.json
-}
-trap cleanup EXIT
 
 # save cookiecutter config with default values
 prepare_cookie_config() {
@@ -50,8 +39,6 @@ default_context:
 EOT
 }
 
-require cookiecutter
-
 # save current directory
 CURDIR=`pwd`
 export HOME=`pwd`/..
@@ -63,7 +50,7 @@ prepare_cookie_config $CTMPDIR/github_deploy_config.json
 echo "Running test script..."
 cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
 (
-    cd ./$PROJNAME
+    cd $PROJNAME
 
     # generating versioneeer files
     pip install versioneer
