@@ -46,8 +46,6 @@ export HOME=`pwd`/..
 # move to temporary directory, to be save and not clutter original workspace
 cd $CTMPDIR
 
-env
-
 prepare_cookie_config $CTMPDIR/github_deploy_config.json
 echo "Running test script..."
 cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
