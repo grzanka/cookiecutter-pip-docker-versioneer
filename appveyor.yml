@@ -53,4 +53,4 @@ before_test:
 build: false
 
 test_script:
-  - bash test/test_create_project_win.sh %TOX_ENV%
+  - C:\msys64\usr\bin\bash test/test_create_project_win.sh %TOX_ENV%
