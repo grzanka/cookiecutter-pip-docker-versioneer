@@ -31,8 +31,9 @@ init:
   - "%PYTHON%/python -c \"import struct;print(8 * struct.calcsize(\'P\'))\""
 
 install:
-  - set PATH=C:\Miniconda\Scripts;%PATH%
-  - ps: If ($env:Platform -Match "x64") {$env:PATH="C:\Miniconda-x64\Scripts";%PATH%}
+  - set MINICONDAPATH=C:\Miniconda
+  - ps: If ($env:Platform -Match "x64") {$env:MINICONDAPATH="C:\Miniconda-x64"}
+  - set PATH=%MINICONDAPATH%\Scripts;%PATH%
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
 
@@ -53,11 +54,5 @@ before_test:
 build: false
 
 test_script:
-  - cd
-  - pwd
-  - echo %APPVEYOR_BUILD_FOLDER%
-  - C:\msys64\usr\bin\bash -c "pwd"
-  - C:\msys64\usr\bin\bash -c "ls -al"
-  - C:\msys64\usr\bin\bash -lc "pwd"
-  - C:\msys64\usr\bin\bash -lc "ls -al"
+  - dir %MINICONDAPATH%\envs\python%PYTHON_VERSION%\scripts
   - C:\msys64\usr\bin\bash -c "test/test_create_project_win.sh %TOX_ENV%"

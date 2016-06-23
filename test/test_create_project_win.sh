@@ -46,6 +46,10 @@ export HOME=`pwd`/..
 # move to temporary directory, to be save and not clutter original workspace
 cd $CTMPDIR
 
+env
+
+ls -al /c/Miniconda/envs/python/$PYTHON_VERSION/scripts
+
 prepare_cookie_config $CTMPDIR/github_deploy_config.json
 echo "Running test script..."
 cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
