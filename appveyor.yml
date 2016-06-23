@@ -44,6 +44,7 @@ install:
 
 # install dependencies
   - conda install -q --name python%PYTHON_VERSION% setuptools wheel numpy scipy
+  - pip install cookiecutter
   - pip install -r {{cookiecutter.project_slug}}/tests/requirements-test.txt
   - pip install -r {{cookiecutter.project_slug}}/requirements.txt
 
