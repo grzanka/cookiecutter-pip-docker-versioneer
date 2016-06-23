@@ -90,11 +90,14 @@ Stable version ::
 
     pip install {{ cookiecutter.distribution_name }}
 
+Latest unstable version, directly GIT repository, using::
 
-Development version from GIT ::
-
+    pip install setuptools versioneer
     pip install git+https://github.com/{{ cookiecutter.repo_group }}/{{ cookiecutter.repo_name }}.git
 
+To unistall, simply use::
+
+    pip uninstall beprof
 
 Documentation
 =============
@@ -108,7 +111,7 @@ Features
 * TODO
 
 Credits
----------
+-------
 
 This package was created with Cookiecutter_ and the `grzanka/cookiecutter-pip-docker-versioneer`_ project template.
 
