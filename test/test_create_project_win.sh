@@ -32,8 +32,8 @@ require() {
 
 #on exit remove generated files
 cleanup() {
-    rm -rf $PROJNAME
-    rm -f $CTMPDIR/github_deploy_config.json
+    del /s /q $PROJNAME
+    del /s /q $CTMPDIR/github_deploy_config.json
 }
 trap cleanup EXIT
 
@@ -63,7 +63,7 @@ prepare_cookie_config $CTMPDIR/github_deploy_config.json
 echo "Running test script..."
 cookiecutter --config-file $CTMPDIR/github_deploy_config.json --no-input $CURDIR
 (
-    cd ./$PROJNAME
+    cd $PROJNAME
 
     # generating versioneeer files
     pip install versioneer
