@@ -26,17 +26,6 @@ NAME="Leszek Grzanka"
 GITHUBUSER="grzankatest"
 GITHUBREPO=python-$PROJNAME
 
-require() {
-    type $1 >/dev/null 2>/dev/null
-}
-
-#on exit remove generated files
-cleanup() {
-    del /s /q $PROJNAME
-    del /s /q $CTMPDIR/github_deploy_config.json
-}
-trap cleanup EXIT
-
 # save cookiecutter config with default values
 prepare_cookie_config() {
     cat <<EOT > $1
@@ -49,8 +38,6 @@ default_context:
     codeclimate: "yes"
 EOT
 }
-
-require cookiecutter
 
 # save current directory
 CURDIR=`pwd`
