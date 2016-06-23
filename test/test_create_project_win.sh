@@ -19,7 +19,7 @@ if [ -z "$2" ]
 fi
 
 # global settings
-CTMPDIR=`mktemp -d -t XXXXXXXX`
+CTMPDIR=$TEMP
 PROJNAME="cookie05"
 EMAIL="grzanka@agh.edu.pl"
 NAME="Leszek Grzanka"
