@@ -1,3 +1,5 @@
 bashplotlib
-numpy>=1.10.4
+# numpy v1.11.1, released in 06.2016 doesn't work well with Python 3.3
+numpy==1.10.4 ; python_version >= '3.3' and python_version < '3.4' # py 3.3
+numpy>=1.10.4 ; python_version < '3.3' or python_version >= '3.4'  # py different than 3.3
 scipy

@@ -16,7 +16,6 @@
     "appveyor": ["yes", "no"],
     "versioneer": ["yes", "no"],
     "docker": ["yes", "no"],
-    "codeclimate" : ["no", "yes"],
     "requiresio": ["no", "yes"],
     "_extensions": ["jinja2_time.TimeExtension"]
 }

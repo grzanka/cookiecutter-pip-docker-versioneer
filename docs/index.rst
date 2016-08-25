@@ -63,10 +63,6 @@ Example session (i've replied only to questions about: name, email, github usern
    1 - yes
    2 - no
    Choose from 1, 2 [1]:
-   Select codeclimate:
-   1 - no
-   2 - yes
-   Choose from 1, 2 [1]:
    Select requiresio:
    1 - no
    2 - yes
