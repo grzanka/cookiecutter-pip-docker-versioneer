@@ -28,7 +28,6 @@ Overview
     * - tests
       - {%- if cookiecutter.travis|lower == 'yes' %} |travis|{% endif -%}
         {%- if cookiecutter.appveyor|lower == 'yes' %} |appveyor|{% endif -%}
-        {%- if cookiecutter.codeclimate|lower == 'yes' %} |codeclimate|{% endif -%}
         {%- if cookiecutter.requiresio|lower == 'yes' %} |requires|{% endif -%}
 {{ '' }}
     * - package
@@ -52,11 +51,6 @@ Overview
 .. |requires| image:: https://requires.io/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/requirements.svg?branch=master
     :alt: Requirements Status
     :target: https://requires.io/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/requirements/?branch=master
-{% endif %}
-{%- if cookiecutter.codeclimate|lower == 'yes' %}
-.. |codeclimate| image:: https://codeclimate.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}/badges/gpa.svg
-   :target: https://codeclimate.com/github/{{ cookiecutter.github_username }}/{{ cookiecutter.repo_name }}
-   :alt: CodeClimate Quality Status
 {% endif %}
 .. |version| image:: https://img.shields.io/pypi/v/{{ cookiecutter.distribution_name }}.svg?style=flat
     :alt: PyPI Package latest release

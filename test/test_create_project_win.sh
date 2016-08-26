@@ -35,7 +35,6 @@ default_context:
     github_username: $GITHUBUSER
     project_name: $PROJNAME
     requiresio: "yes"
-    codeclimate: "yes"
 EOT
 }
 

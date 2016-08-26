@@ -25,7 +25,6 @@ A template to generate skeleton of python project, including:
 
     * flake to ensure that code follows Python standards (described in PEP??)
     * sphinx to ensure that documentation is properly formatted
-    * test coverage reports (ready to be shipped to codeclimate)
 
 * tests in docker, to ensure that project will work smoothly in userspace under various Linux distributions
 
